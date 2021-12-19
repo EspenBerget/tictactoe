@@ -70,7 +70,6 @@ export function minimax(board, player = "O") {
         return {score: 0};
     }
 
-    const allScores = [];
     let best;
     for (let [i,j] of movesIterator(board)) {
         const currentInfo = {i, j};
