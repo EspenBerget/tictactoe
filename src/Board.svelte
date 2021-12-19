@@ -22,7 +22,7 @@
         message = turn + "'s turn";            
     }
 
-    function playerSetSquare(i, j) {
+    async function playerSetSquare(i, j) {
         if (turn === "X" && setSquare(i, j)) {
             if (ai.isVictory(board)) {
                 setVictory();
@@ -35,17 +35,20 @@
             }
 
             let move = ai.minimax(board)
-            setSquare(move.i, move.j);
+            
+            await new Promise(res => setTimeout(() => {
+                setSquare(move.i, move.j);
 
-            if (ai.isVictory(board)) {
-                setVictory();
-                return;
-            }
+                if (ai.isVictory(board)) {
+                    setVictory();
+                    return;
+                }
+            }, 500));
         }
     }
 
     function setVictory() {
-        message = (turn === "X" ? "O" : "X") + " won!";
+        message = turn === "X" ? "Computer wins!" : "You win!";
         freeze = true;
         return;
     }
