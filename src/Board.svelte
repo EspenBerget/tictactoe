@@ -23,8 +23,7 @@
     }
 
     function playerSetSquare(i, j) {
-        if (turn === "X") {
-            setSquare(i, j);
+        if (turn === "X" && setSquare(i, j)) {
             if (ai.isVictory(board)) {
                 setVictory();
                 return;
@@ -60,7 +59,9 @@
         if (board[i][j] == "" && !freeze) {
             board[i][j] = turn;
             nextTurn();
+            return true;
         }
+        return false;
     }
 
     function reset() {
