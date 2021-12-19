@@ -5,10 +5,6 @@
     let turn = "X";
     let message = "X's turn";
     let freeze = false;
-    let movesLeft = 9;
-
-    const aiStartTree = ai.init();
-    let aiOptions = aiStartTree;
 
     function emptyBoard() {
         return [
@@ -33,14 +29,15 @@
                 setVictory();
                 return;
             }
-            if (movesLeft === 0) {
+
+            if (ai.isDraw(board)) {
                 setDraw();
                 return;
             }
-            aiOptions = ai.getOpponentMove(aiOptions, i, j).nextMoves;
-            let [move, nextMoves] = ai.selectBest(aiOptions);
-            aiOptions = nextMoves;
-            setSquare(move[0], move[1]);
+
+            let move = ai.minimax(board)
+            setSquare(move.i, move.j);
+
             if (ai.isVictory(board)) {
                 setVictory();
                 return;
@@ -63,7 +60,6 @@
         if (board[i][j] == "" && !freeze) {
             board[i][j] = turn;
             nextTurn();
-            movesLeft--;
         }
     }
 
@@ -72,8 +68,6 @@
         turn = "X";
         message = "X's turn";
         freeze = false;
-        movesLeft = 9;
-        aiOptions = aiStartTree;
     }
 
 </script>
